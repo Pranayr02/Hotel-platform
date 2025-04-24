@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:15                # official Postgres image
+    env_file: .env                    # read creds from a separate file
+    ports:
+      - "5432:5432"                   # host 5432 ➜ container 5432
+    healthcheck:                      # optional: wait‑until‑ready probe
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
